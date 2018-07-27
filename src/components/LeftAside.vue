@@ -31,6 +31,12 @@
                 }
             });
             this.$router.push(this.items[index].toPage);
+        },
+        handleOpen(key, keyPath) {
+          console.log(key, keyPath);
+        },
+        handleClose(key, keyPath) {
+          console.log(key, keyPath);
         }
     }
   }

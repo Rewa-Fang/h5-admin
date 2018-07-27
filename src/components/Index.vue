@@ -20,7 +20,7 @@
     </div>
     <div class="examples">
       <transition-group name="list" tag="p">
-          <div class="exam-item" v-for="(eaxm,index) in showExamples" :key="index" @click="toLink(eaxm.link)">
+          <div class="exam-item" v-for="(eaxm,index) in showExamples" :key="index" @click="toLink(eaxm.link)" v-if="eaxm.isShow==1">
             <div class="exam-img">
               <img :src="eaxm.imgsrc" alt="">
             </div>
@@ -54,22 +54,7 @@
     },
     created() {
       this.initSelects();
-      axios.get(REQUESTURL.getExamples)
-      .then(response=>{
-        console.log(response);
-        if(response.status == 200){
-          if(response.data.code == 200){
-            this.examples = response.data.data;
-            this.examples.forEach(item=>{
-              item.labels = item.type.split(',');
-            })
-            this.showExamples = this.examples;
-          }
-        }
-      })
-      .catch(error=>{
-        this.$message.error('网络异常，请刷新重试！')
-      })
+      this.initExamData();
     },
     methods:{
       screen(){
@@ -116,6 +101,24 @@
           console.log(error);
         })
       },
+      initExamData(){
+        axios.get(REQUESTURL.getExamples)
+        .then(response=>{
+          console.log(response);
+          if(response.status == 200){
+            if(response.data.code == 200){
+              this.examples = response.data.data;
+              this.examples.forEach(item=>{
+                item.labels = item.type.split(',');
+              })
+              this.showExamples = this.examples;
+            }
+          }
+        })
+        .catch(error=>{
+          this.$message.error('网络异常，请刷新重试！')
+        })
+      }
     }
   }
 </script>

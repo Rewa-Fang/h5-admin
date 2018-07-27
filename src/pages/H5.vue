@@ -1,6 +1,9 @@
 <template>
   <div>
-    <label class="title">新增案例</label>
+    <el-row>
+      <el-col :span="12"><label class="title">新增案例</label></el-col>
+      <el-col :span="12"><el-button icon="el-icon-back" @click="goBackList">返回列表</el-button></el-col>
+    </el-row>
     <el-form :model="h5Form" :rules="rules" ref="h5Form" label-width="100px" class="h5-from">
       <el-form-item label="名称" prop="title">
         <el-input v-model="h5Form.title" ></el-input>
@@ -10,7 +13,7 @@
         <el-input v-model="h5Form.link" ></el-input>
       </el-form-item>
 
-      <el-form-item label="封面图" prop="imgurl">
+      <el-form-item label="封面图" prop="imgsrc">
         <span style="color:#606266">上传一张正方形的H5主封面图片</span>
         <el-upload
           class="avatar-uploader"
@@ -69,14 +72,10 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item label="上线时间">
-        <el-col :span="12">
-          <el-form-item label="上线时间" prop="uptime">
-            <el-date-picker type="date" placeholder="选择日期" v-model="h5Form.uptime" style="width: 100%;"
-            value-format="yyyy-MM-dd"
-            ></el-date-picker>
-          </el-form-item>
-        </el-col>
+      <el-form-item label="上线时间" prop="uptime">
+        <el-date-picker type="date" placeholder="选择日期" v-model="h5Form.uptime" style="width: 100%;"
+        value-format="yyyy-MM-dd"
+        ></el-date-picker>
       </el-form-item>
 
       <el-form-item label="是否显示" prop="isShowBoolean">
@@ -105,25 +104,27 @@ export default {
   data() {
     var checkTitle = (rule, value, callback) => {
       if (!value) {
-        return callback(new Error("标题不能为空"));
-      }
-      if (value.length < 5) {
+        callback(new Error("标题不能为空"));
+      }else if (value.length < 5) {
         callback(new Error("标题不能少于5个字"));
+      }else{
+        callback();
       }
     };
     var checkLink = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error("链接不能为空"));
-      }
       var reg = /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/;
-      if (!reg.test(value)) {
-        return callback(new Error("链接格式不正确"));
+      if (!value) {
+        callback(new Error("链接不能为空"));
+      }else if (!reg.test(value)) {
+        callback(new Error("链接格式不正确"));
+      }else{
+        callback();
       }
     };
     return {
       h5Form: {
         title: "",
-        imgsrc: "http://a2designing.cn/A2/h5-examples/eaxm1.png",
+        imgsrc: "",
         desc: "",
         labels: [],
         type: "",
@@ -138,7 +139,15 @@ export default {
       rules: {
         title: [{ validator: checkTitle, trigger: "blur" }],
         link: [{validator:checkLink,trigger:"blur"}],
-
+        labels:[{required:true,message:'选择一种类型',trigger:'change'}],
+        customer:[{required:true,message:'选择所属客户',trigger:'change'}],
+        service:[{required:true,message:'选择对接客服',trigger:'change'}],
+        developer:[{required:true,message:'选择开发人员',trigger:'change'}],
+        uptime:[{required:true,message:'选择上线时间',trigger:'change'}],
+        imgsrc:[{required:true,message:'必须上传图片',trigger:'blur'}],
+        desc:[{required:true,message:'简单描述一下该H5',trigger:'blur'},
+              {min:10,message:'不少于10个字的描述',trigger:'blur'}
+        ],
       },
       uploadImg: {
         imageUrl: "",
@@ -166,9 +175,11 @@ export default {
         });
     },
     submitForm(formName) {
+      console.log(this.$refs[formName]);
+      
       this.$refs[formName].validate(valid => {
         if (valid) {
-          alert("submit!");
+          this.saveData();
         } else {
           console.log("error submit!!");
           return false;
@@ -224,6 +235,9 @@ export default {
         this.$message.error("上传头像图片大小不能超过 2MB!");
       }
       return isJPG && isLt2M;
+    },
+    goBackList(){
+      this.$router.push('./h5');
     }
   }
 };
