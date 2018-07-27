@@ -88,7 +88,7 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="submitForm('h5Form')">立即添加</el-button>
+        <el-button type="primary" @click="submitForm('h5Form')">提交修改</el-button>
         <el-button @click="resetForm('h5Form')">重置</el-button>
       </el-form-item>
 
@@ -101,6 +101,7 @@ import axios from "axios";
 import REQUESTURL from "@/ServiceAPI.config.js";
 import qs from "qs";
 export default {
+    props: ['h5Form'],
   data() {
     var checkTitle = (rule, value, callback) => {
       if (!value) {
@@ -158,8 +159,11 @@ export default {
       allSelectData: {}
     };
   },
+  
   created() {
     this.initSelects();
+    console.log('create:::'+this.h5Form.title);
+    
   },
   methods: {
     initSelects() {
@@ -237,7 +241,7 @@ export default {
       return isJPG && isLt2M;
     },
     goBackList(){
-      this.$router.push('./');
+      this.$router.push('/admin');
     }
   }
 };

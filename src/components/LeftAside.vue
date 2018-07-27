@@ -13,7 +13,7 @@
     data() {
       return {
         items : [
-          {name:'H5案例',color:false,toPage:'/admin/h5'},
+          {name:'H5案例',color:false,toPage:'/admin/'},
           {name:'客户维护',color:false,toPage:'/admin/customer'},
           {name:'分类标签',color:false,toPage:'/admin/type'},
           {name:'客服管理',color:false,toPage:'/admin/service'},
