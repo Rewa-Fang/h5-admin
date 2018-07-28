@@ -14,9 +14,10 @@
       </el-table-column>
       <el-table-column prop="labels" label="标签" width="200">
           <template slot-scope="scope">
-            <el-tag v-for="(typeTag,index) in scope.row.labels" :key="index" :type="index % 2 === 0 ? 'primary' : 'success'" disable-transitions>
+            <el-tag v-for="(typeTag,index) in scope.row.labels" :key="index" type="primary" disable-transitions>
               {{typeTag}}
             </el-tag>
+            <el-tag type="success">{{ scope.row.customer }}</el-tag>
           </template>
       </el-table-column>
       <el-table-column prop="uptime" label="上线时间" width="100">

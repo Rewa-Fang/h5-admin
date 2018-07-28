@@ -169,6 +169,7 @@ export default {
     // console.log('create:::'+this.h5FormOld.isShow);
     // this.h5Form = this.h5FormOld;
     this.uploadImg.imageUrl = this.h5Form.imgsrc;
+    this.h5Form.labels = [];
     console.log('create:::'+this.h5Form.isShow);
   },
   watch:{
@@ -206,7 +207,7 @@ export default {
     },
     saveData() {
       this.h5Form.type = this.h5Form.labels.join(); // 分类标签转成字符串 便于存储
-      this.h5Form.type = this.h5Form.type + "," + this.h5Form.customer; // 标签再加上客户名称
+      // this.h5Form.type = this.h5Form.type + "," + this.h5Form.customer; // 标签再加上客户名称 
       this.h5Form.isShow = this.h5Form.isShow ? 1 : 0; // 是否显示在列表 1显示 0不显示
       let postData = qs.stringify(this.h5Form);
       console.log(postData);
@@ -217,7 +218,7 @@ export default {
           console.log(response);
           if (response.data.status == 100) {
             this.$message({
-              message: "提交成功！",
+              message: "修改成功！",
               type: "success"
             });
             this.$router.push('/admin')

@@ -29,6 +29,7 @@
               <div class="exam-desc">{{ eaxm.desc }}</div>
               <div class="exam-label">
                 <span v-for="(label,index) in eaxm.labels" :key="index">{{label}}</span>
+                <span>{{ eaxm.customer }}</span>
               </div>
             </div>
           </div>

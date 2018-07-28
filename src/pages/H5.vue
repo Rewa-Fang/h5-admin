@@ -188,7 +188,7 @@ export default {
     },
     saveData() {
       this.h5Form.type = this.h5Form.labels.join(); // 分类标签转成字符串 便于存储
-      this.h5Form.type = this.h5Form.type + "," + this.h5Form.customer; // 标签再加上客户名称
+      // this.h5Form.type = this.h5Form.type + "," + this.h5Form.customer; // 标签再加上客户名称
       this.h5Form.isShow = this.h5Form.isShowBoolean ? 1 : 0; // 是否显示在列表 1显示 0不显示
       let postData = qs.stringify(this.h5Form);
       axios

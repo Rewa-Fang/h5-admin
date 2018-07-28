@@ -72,4 +72,9 @@ config/index.js
     autoOpenBrowser: false,
     errorOverlay: true,
     notifyOnErrors: true,
-    poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
+    poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-  
+
+
+###       // this.h5Form.type = this.h5Form.type + "," + this.h5Form.customer; // 标签再加上客户名称 
+
+type不再加上客户名称  每次提交修改 会重复添加
