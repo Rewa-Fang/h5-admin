@@ -73,6 +73,8 @@
         })
       },
       handleEdit(index,row){ 
+        console.log(row);
+        
         this.$router.push({name:'EditH5',params:{h5Form:row}});
       },
       changeShow(index,row){
@@ -93,7 +95,7 @@
         })
       },
       addExamples(){
-        this.$router.push('./addH5');
+        this.$router.push({name:'H5'});
       }
     }
 

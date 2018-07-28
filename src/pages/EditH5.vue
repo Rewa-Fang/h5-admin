@@ -78,8 +78,8 @@
         ></el-date-picker>
       </el-form-item>
 
-      <el-form-item label="是否显示" prop="isShowBoolean">
-        <el-switch v-model="h5Form.isShowBoolean"></el-switch>
+      <el-form-item label="是否显示" prop="isShow">
+        <el-switch v-model="h5Form.isShow"></el-switch>
         <span style="color:#606266">是否显示在H5案例集合列表中</span>
       </el-form-item>
 
@@ -88,7 +88,7 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="submitForm('h5Form')">提交修改</el-button>
+        <el-button type="primary" @click="submitForm('h5Form')" :disabled="updateBtn">提交修改</el-button>
         <el-button @click="resetForm('h5Form')">重置</el-button>
       </el-form-item>
 
@@ -123,20 +123,20 @@ export default {
       }
     };
     return {
-      h5Form: {
-        title: "",
-        imgsrc: "",
-        desc: "",
-        labels: [],
-        type: "",
-        customer: "",
-        uptime: "",
-        link: "",
-        service: "",
-        developer: "",
-        isShow: 1,
-        isShowBoolean: true
-      },
+      // h5Form: {
+      //   title: "",
+      //   imgsrc: "",
+      //   desc: "",
+      //   labels: [],
+      //   type: "",
+      //   customer: "",
+      //   uptime: "",
+      //   link: "",
+      //   service: "",
+      //   developer: "",
+      //   isShow: 1,
+      //   isShowBoolean: true
+      // },
       rules: {
         title: [{ validator: checkTitle, trigger: "blur" }],
         link: [{validator:checkLink,trigger:"blur"}],
@@ -156,14 +156,28 @@ export default {
         title: "",
         iconType: ""
       },
-      allSelectData: {}
+      allSelectData: {},
+      updateBtn:true,
     };
   },
-  
   created() {
+    if(!this.h5Form.title){
+      this.$router.go(-1);
+      return;
+    }
     this.initSelects();
-    console.log('create:::'+this.h5Form.title);
-    
+    // console.log('create:::'+this.h5FormOld.isShow);
+    // this.h5Form = this.h5FormOld;
+    this.uploadImg.imageUrl = this.h5Form.imgsrc;
+    console.log('create:::'+this.h5Form.isShow);
+  },
+  watch:{
+    h5Form:{
+      handler(val,oldVal){
+        this.updateBtn = false;
+      },
+      deep:true
+    }
   },
   methods: {
     initSelects() {
@@ -193,17 +207,20 @@ export default {
     saveData() {
       this.h5Form.type = this.h5Form.labels.join(); // 分类标签转成字符串 便于存储
       this.h5Form.type = this.h5Form.type + "," + this.h5Form.customer; // 标签再加上客户名称
-      this.h5Form.isShow = this.h5Form.isShowBoolean ? 1 : 0; // 是否显示在列表 1显示 0不显示
+      this.h5Form.isShow = this.h5Form.isShow ? 1 : 0; // 是否显示在列表 1显示 0不显示
       let postData = qs.stringify(this.h5Form);
+      console.log(postData);
+      
       axios
-        .post(REQUESTURL.addH5, postData)
+        .post(REQUESTURL.updateH5, postData)
         .then(response => {
           console.log(response);
           if (response.data.status == 100) {
             this.$message({
-              message: "添加成功！",
+              message: "提交成功！",
               type: "success"
             });
+            this.$router.push('/admin')
           } else {
             this.$message.error("网络异常，添加失败！");
           }

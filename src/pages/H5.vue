@@ -200,6 +200,7 @@ export default {
               message: "添加成功！",
               type: "success"
             });
+            this.$router.push('./');
           } else {
             this.$message.error("网络异常，添加失败！");
           }

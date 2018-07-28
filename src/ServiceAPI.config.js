@@ -7,6 +7,7 @@ const URL = {
   uploadImg:ROOTURL + 'uploadImg.php',
   getExamples:ROOTURL + 'getExamples.php',
   updateIsShow:ROOTURL + 'updateIsShow.php',
+  updateH5:ROOTURL + 'updateH5.php',
 }
 
 export default URL;

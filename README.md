@@ -58,3 +58,18 @@ php服务端post获取不到；
 
 $_POST就可以拿到值了"# h5-admin" 
 # h5-admin
+
+
+### 修改本地支行IP地址  
+
+config/index.js
+
+    // Various Dev Server settings
+
+    host: '192.168.0.7', // can be overwritten by process.env.HOST
+    
+    port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    autoOpenBrowser: false,
+    errorOverlay: true,
+    notifyOnErrors: true,
+    poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
