@@ -8,11 +8,13 @@
       <ul>
         <li>
           <select class="select-ops" name="customers" id="cust-slt" v-model="custSeleced" @change="screen">
+              <option  value="All">All</option>
               <option v-for="(cust,index) in allSelectData.customers" :key="index" :value="cust.name">{{cust.name}}</option>
           </select>
         </li>
         <li>
           <select class="select-ops" name="type" id="type-slt" v-model="typeSeleced" @change="screen">
+            <option  value="All">All</option>
             <option v-for="(type,index) in allSelectData.types" :key="index" :value="type.name">{{type.name}}</option>
           </select>
         </li>
