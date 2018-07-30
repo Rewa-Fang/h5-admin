@@ -171,17 +171,15 @@ export default {
           }
         })
         .catch(error => {
-          console.log(error);
+          // console.log(error);
         });
     },
     submitForm(formName) {
-      console.log(this.$refs[formName]);
-      
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.saveData();
         } else {
-          console.log("error submit!!");
+          // console.log("error submit!!");
           return false;
         }
       });
@@ -194,7 +192,7 @@ export default {
       axios
         .post(REQUESTURL.addH5, postData)
         .then(response => {
-          console.log(response);
+          // console.log(response);
           if (response.data.status == 100) {
             this.$message({
               message: "添加成功！",
@@ -206,7 +204,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log(error);
+          // console.log(error);
         });
     },
     resetForm(formName) {

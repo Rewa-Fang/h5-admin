@@ -57,7 +57,7 @@
       initExamData(){
         axios.get(REQUESTURL.getExamples)
         .then(response=>{
-          console.log(response);
+          // console.log(response);
           if(response.status == 200){
             if(response.data.code == 200){
               this.examples = response.data.data;
@@ -74,12 +74,12 @@
         })
       },
       handleEdit(index,row){ 
-        console.log(row);
+        // console.log(row);
         
         this.$router.push({name:'EditH5',params:{h5Form:row}});
       },
       changeShow(index,row){
-        console.log(index,row);
+        // console.log(index,row);
         axios.get(REQUESTURL.updateIsShow,{
           params:{
             exampId : row.exampId,
@@ -88,11 +88,11 @@
         })
         .then(response=>{
           // if(response.data.code == 100){}
-          console.log(response.data.msg);
+          // console.log(response.data.msg);
           
         })
         .catch(error=>{
-          console.log(error);
+          // console.log(error);
         })
       },
       addExamples(){

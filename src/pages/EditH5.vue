@@ -170,7 +170,7 @@ export default {
     // this.h5Form = this.h5FormOld;
     this.uploadImg.imageUrl = this.h5Form.imgsrc;
     this.h5Form.labels = [];
-    console.log('create:::'+this.h5Form.isShow);
+    // console.log('create:::'+this.h5Form.isShow);
   },
   watch:{
     h5Form:{
@@ -190,17 +190,15 @@ export default {
           }
         })
         .catch(error => {
-          console.log(error);
+          // console.log(error);
         });
     },
     submitForm(formName) {
-      console.log(this.$refs[formName]);
-      
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.saveData();
         } else {
-          console.log("error submit!!");
+          // console.log("error submit!!");
           return false;
         }
       });
@@ -210,25 +208,24 @@ export default {
       // this.h5Form.type = this.h5Form.type + "," + this.h5Form.customer; // 标签再加上客户名称 
       this.h5Form.isShow = this.h5Form.isShow ? 1 : 0; // 是否显示在列表 1显示 0不显示
       let postData = qs.stringify(this.h5Form);
-      console.log(postData);
+      // console.log(postData);
       
-      axios
-        .post(REQUESTURL.updateH5, postData)
-        .then(response => {
-          console.log(response);
-          if (response.data.status == 100) {
-            this.$message({
-              message: "修改成功！",
-              type: "success"
-            });
-            this.$router.push('/admin')
-          } else {
-            this.$message.error("网络异常，添加失败！");
-          }
-        })
-        .catch(error => {
-          console.log(error);
-        });
+      axios.post(REQUESTURL.updateH5, postData)
+      .then(response => {
+        // console.log(response);
+        if (response.data.status == 100) {
+          this.$message({
+            message: "修改成功！",
+            type: "success"
+          });
+          this.$router.push('/admin')
+        } else {
+          this.$message.error("网络异常，添加失败！");
+        }
+      })
+      .catch(error => {
+        // console.log(error);
+      });
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();

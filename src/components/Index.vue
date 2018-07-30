@@ -78,7 +78,7 @@
         }
       },
       sreach(){
-        console.log(this.sreachKeywords);
+        // console.log(this.sreachKeywords);
         if(!this.sreachKeywords) return;
         this.showExamples = this.examples.filter(x=>{
           return x.title.toLocaleLowerCase().indexOf(this.sreachKeywords) > -1 || x.desc.toLocaleLowerCase().indexOf(this.sreachKeywords) > -1;
@@ -99,13 +99,13 @@
           }
         })
         .catch(error=>{
-          console.log(error);
+          // console.log(error);
         })
       },
       initExamData(){
         axios.get(REQUESTURL.getExamples)
         .then(response=>{
-          console.log(response);
+          // console.log(response);
           if(response.status == 200){
             if(response.data.code == 200){
               this.examples = response.data.data;

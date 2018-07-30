@@ -64,7 +64,7 @@
         }
       })
       .catch(error=>{
-        console.log(error);
+        // console.log(error);
       })
     },
     methods:{
@@ -80,7 +80,7 @@
               }
             })
             .catch(error=>{
-              console.log(error);
+              // console.log(error);
             })
           } else {
             return false;

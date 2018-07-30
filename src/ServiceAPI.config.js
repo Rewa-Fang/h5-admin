@@ -8,6 +8,7 @@ const URL = {
   getExamples:ROOTURL + 'getExamples.php',
   updateIsShow:ROOTURL + 'updateIsShow.php',
   updateH5:ROOTURL + 'updateH5.php',
+  login:ROOTURL + 'login.php',
 }
 
 export default URL;
