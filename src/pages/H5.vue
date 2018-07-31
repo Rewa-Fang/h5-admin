@@ -101,7 +101,6 @@ import axios from "axios";
 import REQUESTURL from "@/ServiceAPI.config.js";
 import qs from "qs";
 export default {
-  // H5编辑页面和创建页面可以使用组件利用 有时间可以重构这个组件 很简单 利用router中 mate属性标识 
     props: ['h5FormData','isEdit'],
   data() {
     var checkTitle = (rule, value, callback) => {
