@@ -218,6 +218,7 @@ export default {
           this.saveData();
         } else {
           // console.log("error submit!!");
+          this.isLoading = false;
           return false;
         }
       });
