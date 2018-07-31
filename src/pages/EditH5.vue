@@ -88,7 +88,7 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="submitForm('h5Form')" :disabled="updateBtn">提交修改</el-button>
+        <el-button type="primary" @click="submitForm('h5Form')" :disabled="updateBtn">提交</el-button>
         <el-button @click="resetForm('h5Form')">重置</el-button>
       </el-form-item>
 
@@ -101,6 +101,7 @@ import axios from "axios";
 import REQUESTURL from "@/ServiceAPI.config.js";
 import qs from "qs";
 export default {
+  // H5编辑页面和创建页面可以使用组件利用 有时间可以重构这个组件 很简单 利用router中 mate属性标识 
     props: ['h5Form'],
   data() {
     var checkTitle = (rule, value, callback) => {
@@ -123,20 +124,20 @@ export default {
       }
     };
     return {
-      // h5Form: {
-      //   title: "",
-      //   imgsrc: "",
-      //   desc: "",
-      //   labels: [],
-      //   type: "",
-      //   customer: "",
-      //   uptime: "",
-      //   link: "",
-      //   service: "",
-      //   developer: "",
-      //   isShow: 1,
-      //   isShowBoolean: true
-      // },
+      h5Form: {
+        title: "",
+        imgsrc: "",
+        desc: "",
+        labels: [],
+        type: "",
+        customer: "",
+        uptime: "",
+        link: "",
+        service: "",
+        developer: "",
+        isShow: true,
+        isShowBoolean: true
+      },
       rules: {
         title: [{ validator: checkTitle, trigger: "blur" }],
         link: [{validator:checkLink,trigger:"blur"}],
@@ -166,11 +167,9 @@ export default {
       return;
     }
     this.initSelects();
-    // console.log('create:::'+this.h5FormOld.isShow);
-    // this.h5Form = this.h5FormOld;
+    
     this.uploadImg.imageUrl = this.h5Form.imgsrc;
     this.h5Form.labels = [];
-    // console.log('create:::'+this.h5Form.isShow);
   },
   watch:{
     h5Form:{

@@ -78,8 +78,8 @@
         ></el-date-picker>
       </el-form-item>
 
-      <el-form-item label="是否显示" prop="isShowBoolean">
-        <el-switch v-model="h5Form.isShowBoolean"></el-switch>
+      <el-form-item label="是否显示" prop="isShow">
+        <el-switch v-model="h5Form.isShow"></el-switch>
         <span style="color:#606266">是否显示在H5案例集合列表中</span>
       </el-form-item>
 
@@ -88,7 +88,7 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="submitForm('h5Form')">立即添加</el-button>
+        <el-button type="primary" @click="submitForm('h5Form')" :disabled="updateBtn" :loading="isLoading">提交</el-button>
         <el-button @click="resetForm('h5Form')">重置</el-button>
       </el-form-item>
 
@@ -101,6 +101,8 @@ import axios from "axios";
 import REQUESTURL from "@/ServiceAPI.config.js";
 import qs from "qs";
 export default {
+  // H5编辑页面和创建页面可以使用组件利用 有时间可以重构这个组件 很简单 利用router中 mate属性标识 
+    props: ['h5FormData','isEdit'],
   data() {
     var checkTitle = (rule, value, callback) => {
       if (!value) {
@@ -133,7 +135,7 @@ export default {
         link: "",
         service: "",
         developer: "",
-        isShow: 1,
+        isShow: true,
         isShowBoolean: true
       },
       rules: {
@@ -155,11 +157,46 @@ export default {
         title: "",
         iconType: ""
       },
-      allSelectData: {}
+      allSelectData: {},
+      firstWacth:false,
+      updateBtn:true,
+      requestUrl:'',
+      isLoading:false
     };
   },
   created() {
     this.initSelects();
+    
+    if(this.isEdit){
+      this.firstWacth = true; // 设置为编辑模式下第一次数据变更
+      if(!this.h5FormData.title){
+        this.$router.go(-1);
+        return;
+      }else{
+        this.h5Form = this.h5FormData;
+        this.requestUrl = REQUESTURL.updateH5;
+        this.uploadImg.imageUrl = this.h5FormData.imgsrc;
+        // this.h5Form.labels = [];
+        this.updateBtn = true;
+      }
+    }else{
+      this.requestUrl = REQUESTURL.addH5;
+    }
+  },
+  watch:{
+    //深度监听数据发生变化 * 发生变化才允许提交请求
+    h5Form:{
+      handler(val,oldVal){
+        if(this.firstWacth){ 
+          //因为在create的时候this.h5Form = this.h5FormData; 所以会监测到数据发生变更 判断是否是编辑模式下第一次数据变更 如果是刚不改变提交按钮状态 
+        
+          this.firstWacth = false; //设置为false 第一次之后监测数据变更
+          return;
+        }
+        this.updateBtn = false;
+      },
+      deep:true
+    }
   },
   methods: {
     initSelects() {
@@ -175,6 +212,7 @@ export default {
         });
     },
     submitForm(formName) {
+      this.isLoading = true;
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.saveData();
@@ -186,26 +224,29 @@ export default {
     },
     saveData() {
       this.h5Form.type = this.h5Form.labels.join(); // 分类标签转成字符串 便于存储
-      // this.h5Form.type = this.h5Form.type + "," + this.h5Form.customer; // 标签再加上客户名称
-      this.h5Form.isShow = this.h5Form.isShowBoolean ? 1 : 0; // 是否显示在列表 1显示 0不显示
+      // this.h5Form.type = this.h5Form.type + "," + this.h5Form.customer; // 标签再加上客户名称 
+      this.h5Form.isShow = this.h5Form.isShow ? 1 : 0; // 是否显示在列表 1显示 0不显示
       let postData = qs.stringify(this.h5Form);
-      axios
-        .post(REQUESTURL.addH5, postData)
-        .then(response => {
-          // console.log(response);
-          if (response.data.status == 100) {
-            this.$message({
-              message: "添加成功！",
-              type: "success"
-            });
-            this.$router.push('./');
-          } else {
-            this.$message.error("网络异常，添加失败！");
-          }
-        })
-        .catch(error => {
-          // console.log(error);
-        });
+      // console.log(postData);
+      
+      axios.post(this.requestUrl, postData)
+      .then(response => {
+        // console.log(response);
+        if (response.data.status == 100) {
+          this.$message({
+            message: "提交成功！",
+            type: "success"
+          });
+          this.$router.push('/admin');
+        } else {
+          this.$message.error("网络异常，提交失败！");
+          this.isLoading = false;
+        }
+      })
+      .catch(error => {
+        // console.log(error);
+        this.isLoading = false;
+      });
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
@@ -236,7 +277,7 @@ export default {
       return isJPG && isLt2M;
     },
     goBackList(){
-      this.$router.push('./');
+      this.$router.push('/admin');
     }
   }
 };

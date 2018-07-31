@@ -76,7 +76,7 @@
       handleEdit(index,row){ 
         // console.log(row);
         
-        this.$router.push({name:'EditH5',params:{h5Form:row}});
+        this.$router.push({name:'EditH5',params:{h5FormData:row,isEdit:true}});
       },
       changeShow(index,row){
         // console.log(index,row);
