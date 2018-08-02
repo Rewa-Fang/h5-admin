@@ -207,6 +207,7 @@
 }
 .exam-img img{
   width: 90%;
+  height: 100%;
 }
 .exam-centent{
   height: 9rem;

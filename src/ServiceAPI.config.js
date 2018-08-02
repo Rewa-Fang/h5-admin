@@ -9,6 +9,7 @@ const URL = {
   updateIsShow:ROOTURL + 'updateIsShow.php',
   updateH5:ROOTURL + 'updateH5.php',
   login:ROOTURL + 'login.php',
+  deleteH5:ROOTURL + 'deleteH5.php',
 }
 
 export default URL;
